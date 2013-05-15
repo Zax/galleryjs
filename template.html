@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="it" lang="it">
+	<head>
+		<title>(:title:)</title>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<link rel="stylesheet" href="../css/supersized.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="../css/supersized.shutter.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.easing.min.js"></script>
+		<script type="text/javascript" src="../js/supersized.3.2.7.min.js"></script>
+		<script type="text/javascript" src="../js/supersized.shutter.min.js"></script>
+		<script type="text/javascript">
+			jQuery(function($){
+			
+				$.supersized.themeVars = {
+					// Internal Variables
+					progress_delay		:	false,				// Delay after resize before resuming slideshow
+					thumb_page 			: 	false,				// Thumbnail page
+					thumb_interval 		: 	false,				// Thumbnail interval
+					image_path			:	'../css/img/',		// Default image path
+																
+					// General Elements							
+					play_button			:	'#pauseplay',		// Play/Pause button
+					next_slide			:	'#nextslide',		// Next slide button
+					prev_slide			:	'#prevslide',		// Prev slide button
+					next_thumb			:	'#nextthumb',		// Next slide thumb button
+					prev_thumb			:	'#prevthumb',		// Prev slide thumb button
+					
+					slide_caption		:	'#slidecaption',	// Slide caption
+					slide_current		:	'.slidenumber',		// Current slide number
+					slide_total			:	'.totalslides',		// Total Slides
+					slide_list			:	'#slide-list',		// Slide jump list							
+					
+					thumb_tray			:	'#thumb-tray',		// Thumbnail tray
+					thumb_list			:	'#thumb-list',		// Thumbnail list
+					thumb_forward		:	'#thumb-forward',	// Cycles forward through thumbnail list
+					thumb_back			:	'#thumb-back',		// Cycles backwards through thumbnail list
+					tray_arrow			:	'#tray-arrow',		// Thumbnail tray button arrow
+					tray_button			:	'#tray-button',		// Thumbnail tray button
+					progress_bar		:	'#progress-bar'		// Progress bar
+				};	
+
+				$.supersized({
+					// Functionality
+					slideshow               :   (:slideshow ~ 1:),
+					autoplay				:	0,								// Slideshow starts playing automatically
+					start_slide             :   1,								// Start slide (0 is random)
+					stop_loop				:	0,								// Pauses slideshow on last slide
+					random					: 	0,								// Randomize slide order (Ignores start slide)
+					slide_interval          :   (:slide_interval ~ 3000:),		// Length between transitions
+					transition              :   (:transition ~ 1:), 			// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+					transition_speed		:	(:transition_speed ~ 700:),		// Speed of transition
+					new_window				:	1,								// Image links open in new window/tab
+					pause_hover             :   0,								// Pause slideshow on hover
+					keyboard_nav            :   1,								// Keyboard navigation on/off
+					performance				:	1,								// 0-Normal, 1-Hybrid speed/quality, 2-Optimizes image quality, 3-Optimizes transition speed // (Only works for Firefox/IE, not Webkit)
+					image_protect			:	1,								// Disables image dragging and right click with Javascript
+					// Size & Position						   
+					min_width		        :   0,								// Min width allowed (in pixels)
+					min_height		        :   0,								// Min height allowed (in pixels)
+					vertical_center         :   1,								// Vertically center background
+					horizontal_center       :   1,								// Horizontally center background
+					fit_always				:	0,								// Image will never exceed browser width or height (Ignores min. dimensions)
+					fit_portrait         	:   1,								// Portrait images will not exceed browser height
+					fit_landscape			:   0,								// Landscape images will not exceed browser width
+					// Theme Options			   
+					progress_bar			:	1,								// Timer for each slide							
+					mouse_scrub				:	0,															   
+					// Components							
+					slide_links				:	'blank',						// Individual links for each slide (Options: false, 'num', 'name', 'blank')
+					thumb_links				:	1,								// Individual thumb links for each slide
+					thumbnail_navigation    :   0,								// Thumbnail navigation
+					slides 					:  	[								// Slideshow Images
+												(:slides ~ { image:'[:image:]', thumb:'[:thumb:]', title:'[:title:]', url:'[:url:]' }, :)
+												]
+				});
+		    });
+		</script>
+	<style type="text/css">
+		ul.metadata { background: url('../css/img/bg-black.png'); color: #eee; position: absolute; display: block; left: 55px; bottom: 45px; }
+	</style>
+	</head>
+
+	<body>
+		
+		<!--Thumbnail Navigation-->
+		<div id="prevthumb"></div>
+		<div id="nextthumb"></div>
+		
+		<!--Arrow Navigation-->
+		<a id="prevslide" class="load-item"></a>
+		<a id="nextslide" class="load-item"></a>
+		
+		<div id="thumb-tray" class="load-item">
+			<div id="thumb-back"></div>
+			<div id="thumb-forward"></div>
+		</div>
+		
+		<!--Time Bar-->
+		<div id="progress-back" class="load-item">
+			<div id="progress-bar"></div>
+		</div>
+		
+		<!--Control Bar-->
+		<div id="controls-wrapper" class="load-item">
+			<div id="controls">
+				
+				<a id="play-button"><img id="pauseplay" src="../css/img/pause.png"/></a>
+			
+				<!--Slide counter-->
+				<div id="slidecounter">
+					<span class="slidenumber"></span> / <span class="totalslides"></span>
+				</div>
+				
+				<!--Slide captions displayed here-->
+				<div id="slidecaption"></div>
+				
+				<!--Thumb Tray button-->
+				<a id="tray-button"><img id="tray-arrow" src="../css/img/button-tray-up.png"/></a>
+				
+				<!--Navigation-->
+				<ul id="slide-list"></ul>
+				
+			</div>
+		</div>
+	
+	</body>
+
+</html>
