@@ -33,15 +33,16 @@ try{
 }
 catch (err){
 	parameters = { 
-		title: path,
-		load_images: true,
-		load_metadata: true,
-		max_dimension_web_version: 2000,
+		title: path,						// title of album
+		load_images: true,					// parse images from directory
+		load_metadata: true,				// load metadata from images (for description)
+		max_dimension_web_version: 2000,	
 		max_dimension_thumb_version: 200,
-		slideshow: 1, 
-		slide_interval: 1000, 
-		transition: 1,
-		transition_speed: 700,
+		slideshow: 1,
+		autoplay: 1,
+		slide_interval: 3000, 				// Length between transitions
+		transition: 1,						// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+		transition_speed: 700,				// Speed of transition
 		slides: []
 	}
 }
@@ -102,7 +103,12 @@ asyncblock(function (flow) {
 	    	parameters.slides[foto] = { image : files[i].replace('.jpg', '_web.jpg'), thumb : files[i].replace('.jpg', '_thumb.jpg'), title: title, url : files[i] };
 		    foto++;
 		}
-	}	
+	}
+	// check presence of images
+	if (parameters.slides.length == 0){
+		console.log('I have not found images for the gallery!');
+		process.exit(1);
+	}
 	// make html page from template
 	console.log('Create index.html page...');
 	bind.toFile('template.html', parameters, function(data) {

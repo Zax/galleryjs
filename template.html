@@ -43,7 +43,7 @@
 				$.supersized({
 					// Functionality
 					slideshow               :   (:slideshow ~ 1:),
-					autoplay				:	0,								// Slideshow starts playing automatically
+					autoplay				:	(:autoplay ~ 1:),				// Slideshow starts playing automatically
 					start_slide             :   1,								// Start slide (0 is random)
 					stop_loop				:	0,								// Pauses slideshow on last slide
 					random					: 	0,								// Randomize slide order (Ignores start slide)
@@ -71,7 +71,7 @@
 					thumb_links				:	1,								// Individual thumb links for each slide
 					thumbnail_navigation    :   0,								// Thumbnail navigation
 					slides 					:  	[								// Slideshow Images
-												(:slides ~ { image:'[:image:]', thumb:'[:thumb:]', title:'[:title:]', url:'[:url:]' }, :)
+												(:slides ~ {image:'[:image:]', thumb:'[:thumb:]', title:'[:title:]', url:'[:url:]'}, :)
 												]
 				});
 		    });
