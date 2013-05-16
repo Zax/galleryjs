@@ -6,11 +6,15 @@ Based on jquery gallery project [supersized](http://buildinternet.com/project/su
 
 usage:
 
-    node make.js directory_of_images
+    node make.js directory_of_images [options]
 
 example:
 
     node make.js demo
+
+or
+
+    node make.js demo '{ "title" : "Album Title" }'
 
 
 https://github.com/buildinternet/supersized

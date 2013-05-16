@@ -6,7 +6,7 @@ if (typeof String.prototype.endsWith !== 'function') {
 }
 
 if (!process.argv[2]){
-	console.log('usage: node make.js album_directory');
+	console.log('usage: node make.js album_directory [options]');
 	process.exit(1);
 }
 
@@ -18,35 +18,43 @@ var exec = require('child_process').exec;
 var im = require('imagemagick');
 var colors = require('colors');
 var bind = require("bind");
-var parameters = null;
+
+// default parameters
+var parameters = { 
+	title: path,						// title of album
+	load_images: true,					// parse images from directory
+	load_metadata: true,				// load metadata from images (for description)
+	max_dimension_web_version: 2000,	
+	max_dimension_thumb_version: 200,
+	slideshow: 1,
+	autoplay: 1,
+	slide_interval: 3000, 				// Length between transitions
+	transition: 1,						// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+	transition_speed: 700,				// Speed of transition
+	slides: []
+};
 
 // check directories structure
 if (!fs.existsSync(path)){
     console.log('Path "' +  path + '" of photos not exist!');
 	process.exit(1);
 }
-// load parameters
-console.log('load parameters...');
+// load parameters from index.json
 try{
 	data = fs.readFileSync(path + '/index.json', 'utf8');
-	parameters = JSON.parse(data);
+	parameters = merge(parameters, JSON.parse(data));
+	console.log('load parameters from index.json...');
 }
-catch (err){
-	parameters = { 
-		title: path,						// title of album
-		load_images: true,					// parse images from directory
-		load_metadata: true,				// load metadata from images (for description)
-		max_dimension_web_version: 2000,	
-		max_dimension_thumb_version: 200,
-		slideshow: 1,
-		autoplay: 1,
-		slide_interval: 3000, 				// Length between transitions
-		transition: 1,						// 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
-		transition_speed: 700,				// Speed of transition
-		slides: []
+catch (err){}
+// load parameters from index.json
+try{
+	if (process.argv[3]){
+		parameters = merge(parameters, JSON.parse(process.argv[3]));
+		console.log('load parameters from command line ...');
 	}
 }
-
+catch (err){}
+// sync block
 asyncblock(function (flow) {
 	// load images			
 	if (parameters.load_images){
@@ -138,4 +146,11 @@ function resizeImage(original, resized, max_dimension, callback) {
 		}
 		callback();
 	});
+}
+// merge two objects
+function merge(obj1,obj2){
+    var obj3 = {};
+    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+    return obj3;
 }
