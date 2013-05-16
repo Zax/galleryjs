@@ -6,7 +6,7 @@ if (typeof String.prototype.endsWith !== 'function') {
 }
 
 if (!process.argv[2]){
-	console.log('usage: node make.js album_directory [album_description]');
+	console.log('usage: node make.js album_directory');
 	process.exit(1);
 }
 
@@ -33,9 +33,11 @@ try{
 }
 catch (err){
 	parameters = { 
-		title: process.argv[3] ? process.argv[3] : path,
+		title: path,
 		load_images: true,
 		load_metadata: true,
+		max_dimension_web_version: 2000,
+		max_dimension_thumb_version: 200,
 		slideshow: 1, 
 		slide_interval: 1000, 
 		transition: 1,
@@ -57,12 +59,12 @@ asyncblock(function (flow) {
 	    	console.log('Process file: ' + files[i].yellow + ' (' + printSize(original_file) + ')');
 	    	// make web version (max 2000 px)
 			var web_file = original_file.replace('.jpg','_web.jpg');
-			exec('sips -Z 2000 ' + original_file + ' --out ' + web_file, flow.add());
+	    	resizeImage(original_file, web_file, parameters.max_dimension_web_version, flow.add());
 			result = flow.wait();
 			console.log('created web version (' + printSize(web_file) + ')');
 	    	// make thumb version (max 200 px)
 			var thumb_file = original_file.replace('.jpg','_thumb.jpg');
-			exec('sips -Z 200 ' + original_file + ' --out ' + thumb_file, flow.add());
+	    	resizeImage(original_file, thumb_file, parameters.max_dimension_thumb_version, flow.add());
 			result = flow.wait();
 			console.log('created thumb version (' + printSize(thumb_file) + ')');
 
