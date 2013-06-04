@@ -1,3 +1,4 @@
+// comment
 // endWith function for string
 if (typeof String.prototype.endsWith !== 'function') {
 	String.prototype.endsWith = function(suffix) {
